@@ -81,7 +81,7 @@ def main():
             if not answer:
                 answer = "No answer"
             if not return_submodule_outputs:
-                st.markdown("## The highest answer is")
+                st.markdown("## Highest possible answer is")
                 st.write(answer)
                 st.markdown("## Probability for this answer is")
                 st.write(highest_prob)
