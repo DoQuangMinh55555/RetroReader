@@ -50,7 +50,7 @@ my_hash_func = {
 #     config_file = "configs/train_en_albert_xxlarge.yaml"
 #     return RetroReader.load(config_file=config_file)
 
-@st.cache(hash_funcs=my_hash_func, allow_output_mutation=True)
+#@st.cache(hash_funcs=my_hash_func, allow_output_mutation=True)
 def load_en_bert_large_model():
     config_file = "configs/inference_en_bert_large.yaml"
     return RetroReader.load(config_file=config_file)
@@ -66,19 +66,23 @@ def load_en_bert_large_model():
 
 
 def main():
-    st.title("Retrospective Reader Demo")
+    option = st.selectbox(
+        label="Please choose the language you want to use",
+        options=(
+            "English",
+            "Vietnamese"
+        ),
+        index=0,
+    )
+    
+    if option == "English":
+        st.title("Retrospective Reader Demo")
+    else:
+        st.title("Demo Bộ đọc Hồi tưởng")
     
     # st.markdown("## Model name")
-    # option = st.selectbox(
-    #     label="Choose the model used in retro reader",
-    #     options=(
-    #         "bert-large-uncased"
-    #     ),
-    #     index=0,
-    # )
-    # model_name = option
     
-    # retro_reader = RETRO_READER_HOST[model_name]
+   
     
     retro_reader = load_en_bert_large_model()
     lang_prefix = "EN"
