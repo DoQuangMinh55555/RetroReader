@@ -50,7 +50,7 @@ def main():
         lang_prefix = "EN"
         height = 300
         
-        return_submodule_outputs = st.sidebar.checkbox('return_submodule_outputs', value=False)
+        
         
         st.markdown("## Demonstration")
         with st.form(key="my_form"):
@@ -66,6 +66,7 @@ def main():
                 help=getattr(C, f"{lang_prefix}_CONTEXT_HELP_TEXT"),
             )
             submit_button = st.form_submit_button(label="Submit")
+            return_submodule_outputs = st.checkbox('return_5_outputs', value=False)
         
         if submit_button:
             with st.spinner("Please wait a little bit.."):
@@ -79,12 +80,13 @@ def main():
             highest_prob = outputs[2]
             if not answer:
                 answer = "No answer"
-            st.markdown("## The answer is")
-            st.write(answer)
-            st.markdown("### Probability for this answer is")
-            st.write(highest_prob)
-            if return_submodule_outputs:
-                st.markdown("### 5 possible answers are")
+            if not return_submodule_outputs:
+                st.markdown("## The highest answer is")
+                st.write(answer)
+                st.markdown("## Probability for this answer is")
+                st.write(highest_prob)
+            else:
+                st.markdown("## 5 highest possible answers are")
                 st.json(nbest_preds)
              
         
