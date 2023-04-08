@@ -1,4 +1,5 @@
 import streamlit as st
+from annotated_text import annotated_text
 
 import io
 import os
@@ -83,6 +84,7 @@ def main():
             if not return_submodule_outputs:
                 st.markdown("## Highest possible answer is")
                 st.write(answer)
+                query.annotate_text(answer, "", "#faa")
                 st.markdown("## Probability for this answer is")
                 st.write(highest_prob)
             else:
