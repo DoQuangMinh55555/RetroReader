@@ -84,7 +84,8 @@ def main():
             if not return_submodule_outputs:
                 st.markdown("## Highest possible answer is")
                 st.write(answer)
-                annotate_text(answer, "", "#faa")
+                ans_tuple = (answer, "", "#faa")
+                annotate_text(ans_tuple)
                 st.markdown("## Probability for this answer is")
                 st.write(highest_prob)
             else:
