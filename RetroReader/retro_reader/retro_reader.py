@@ -95,7 +95,7 @@ class IntensiveReader(BaseReader):
         # Internal Front Verification (I-FV)
         # Verification is already done inside the model
         # Post-processing: we match the start logits and end logits to answers in the original context.
-        predictions, nbest_json, scores_diff_json = self.compute_predictions(
+        predictions, nbest_json, scores_diff_json, answer_start = self.compute_predictions(
             eval_examples,
             eval_dataset,
             output.predictions,
@@ -108,7 +108,7 @@ class IntensiveReader(BaseReader):
             n_tops=(self.data_args.start_n_top, self.data_args.end_n_top),
         )
         if mode == "retro_inference":
-            return nbest_json, scores_diff_json
+            return nbest_json, scores_diff_json, answer_start
         # Format the result to the format the metric expects.
         if self.data_args.version_2_with_negative:
             formatted_predictions = [
@@ -320,7 +320,7 @@ class IntensiveReader(BaseReader):
                 with open(null_odds_file, "w") as writer:
                     writer.write(json.dumps(scores_diff_json, indent=4) + "\n")
 
-        return all_predictions, all_nbest_json, scores_diff_json
+        return all_predictions, all_nbest_json, scores_diff_json, answer_start
     
     
 class RearVerifier:
@@ -621,11 +621,11 @@ class RetroReader:
         score_ext = self.sketch_reader.predict(sketch_features, predict_examples)
         #self.sketch_reader.to("cpu") 
         #self.intensive_reader.to(self.intensive_reader.args.device)
-        nbest_preds, score_diff = self.intensive_reader.predict(
+        nbest_preds, score_diff, answer_start = self.intensive_reader.predict(
             intensive_features, predict_examples, mode="retro_inference")
         #self.intensive_reader.to("cpu")
         predictions, scores, highest_prob = self.rear_verifier(score_ext, score_diff, nbest_preds)
-        outputs = (predictions, nbest_preds, highest_prob)
+        outputs = (predictions, nbest_preds, highest_prob, answer_start)
         # if return_submodule_outputs:
         #     outputs += (score_ext, nbest_preds, score_diff)
         return outputs
