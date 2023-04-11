@@ -251,9 +251,13 @@ class IntensiveReader(BaseReader):
                 predictions.append(min_null_prediction)
 
             # Use the offsets to gather the answer text in the original context.
+            already_get_answer_start = False
             context = example["context"]
             for pred in predictions:
                 offsets = pred.pop("offsets")
+                if already_get_answer_start == False:
+                    answer_start = offsets[0]
+                    already_get_answer_start = True
                 pred["text"] = context[offsets[0] : offsets[1]]
 
             # In the very rare edge case we have not a single non-null prediction,
