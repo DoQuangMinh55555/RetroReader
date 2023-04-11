@@ -82,6 +82,7 @@ def main():
             answer_start = outputs[3]
             if not answer:
                 answer = "No answer"
+                answer_start = -1
             if not return_submodule_outputs:
                 st.markdown("## Highest possible answer is")
                 st.write(answer)
