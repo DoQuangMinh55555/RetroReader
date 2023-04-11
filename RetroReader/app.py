@@ -79,6 +79,7 @@ def main():
             answer = outputs[0]["id-01"]
             nbest_preds = outputs[1]
             highest_prob = outputs[2]
+            answer_start = outputs[3]
             if not answer:
                 answer = "No answer"
             if not return_submodule_outputs:
@@ -88,6 +89,8 @@ def main():
                 #annotated_text(ans_tuple)
                 st.markdown("## Probability for this answer is")
                 st.write(highest_prob)
+                st.markdown("## Answer start is")
+                st.write(answer_start)
             else:
                 st.markdown("## 5 highest possible answers are")
                 st.json(nbest_preds)
