@@ -34,6 +34,13 @@ def load_en_bert_large_model():
     config_file = "configs/inference_en_bert_large.yaml"
     return RetroReader.load(config_file=config_file)
 
+def format_context(context: str, answer_start: int, answer_end: int):
+    context_before_answer = context[:answer_start]
+    context_answer = context[answer_start:answer_end]
+    context_after_answer = context[answer_end:]
+    context_formatted = annotated_text(context_before_answer, (context_answer, "", "#ff0"), context_after_answer)
+    return context_formatted
+
 
 def main():
     option = st.selectbox(
@@ -90,8 +97,12 @@ def main():
                 #annotated_text(ans_tuple)
                 st.markdown("## Probability for this answer is")
                 st.write(highest_prob)
-                st.markdown("## Answer start is")
-                st.write(answer_start)
+                #st.markdown("## Answer start is")
+                #st.write(answer_start)
+                if answer_start != -1:
+                    answer_end = answer_start + len(answer)
+                    #st.write(format_context(context, answer_start, answer_end))
+                    context = format_context(context, answer_start, answer_end)
             else:
                 st.markdown("## 5 highest possible answers are")
                 st.json(nbest_preds)
