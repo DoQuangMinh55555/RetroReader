@@ -20,24 +20,21 @@ def get_sketch_features(tokenizer, mode, data_args):
         Returns:
             Dict: Tokenized examples
         """
-        # truncation과 padding을 통해 tokenization을 진행
-        # stride를 이용하여 overflow를 유지
-        # 각 example들은 이전의 context와 조금씩 겹침
-        # overflow 발생 시 지정한 batch size보다 더 많은 sample이 들어올 수 있음 -> data augmentation
+        
         tokenized_examples = tokenizer(
             examples[QUESTION_COLUMN_NAME if pad_on_right else CONTEXT_COLUMN_NAME],
             examples[CONTEXT_COLUMN_NAME if pad_on_right else QUESTION_COLUMN_NAME],
-            # 길이가 긴 context가 등장할 경우 truncation을 진행
+            
             truncation="only_second" if pad_on_right else "only_first",
             max_length=max_seq_length,
             stride=data_args.doc_stride,
-            # overflow 발생 시 원래 인덱스를 찾을 수 있게 mapping 가능한 값이 필요
+            
             return_overflowing_tokens=True,
             return_offsets_mapping=False,
-            # sentence pair가 입력으로 들어올 때 0과 1로 구분지음
+            
             return_token_type_ids=data_args.return_token_type_ids,
             padding="max_length" if data_args.pad_to_max_length else False,
-            # return_tensors='pt'
+            
         )
         return tokenized_examples
     
@@ -48,10 +45,10 @@ def get_sketch_features(tokenizer, mode, data_args):
         tokenized_examples["labels"] = []
         
         for i in range(len(tokenized_examples["input_ids"])):
-            # 하나의 example이 여러 개의 span을 가질 수 있음
+            
             sample_index = sample_mapping[i]
             
-            # unanswerable label 생성
+            
             # answerable: 0, unanswerable: 1
             is_impossible = examples[ANSWERABLE_COLUMN_NAME][sample_index]
             tokenized_examples["labels"].append(0 if not is_impossible else 1)
@@ -66,14 +63,13 @@ def get_sketch_features(tokenizer, mode, data_args):
         tokenized_examples["labels"] = []
         
         for i in range(len(tokenized_examples["input_ids"])):
-            # 하나의 example이 여러 개의 span을 가질 수 있음
+            
             sample_index = sample_mapping[i]
             
             id_col = examples[ID_COLUMN_NAME][sample_index]
             tokenized_examples["example_id"].append(id_col)
             
-            # unanswerable label 생성
-            # answerable: 0, unanswerable: 1
+            
             is_impossible = examples[ANSWERABLE_COLUMN_NAME][sample_index]
             tokenized_examples["labels"].append(0 if not is_impossible else 1)
             
@@ -86,7 +82,7 @@ def get_sketch_features(tokenizer, mode, data_args):
         tokenized_examples["example_id"] = []
         
         for i in range(len(tokenized_examples["input_ids"])):
-            # 하나의 example이 여러 개의 span을 가질 수 있음
+            
             sample_index = sample_mapping[i]
             
             id_col = examples[ID_COLUMN_NAME][sample_index]
@@ -117,26 +113,22 @@ def get_intensive_features(tokenizer, mode, data_args):
         Returns:
             Dict: Tokenized examples
         """
-        # truncation과 padding을 통해 tokenization을 진행
-        # stride를 이용하여 overflow를 유지
-        # 각 example들은 이전의 context와 조금씩 겹침
-        # overflow 발생 시 지정한 batch size보다 더 많은 sample이 들어올 수 있음
+        
         tokenized_examples = tokenizer(
             examples[QUESTION_COLUMN_NAME if pad_on_right else CONTEXT_COLUMN_NAME],
             examples[CONTEXT_COLUMN_NAME if pad_on_right else QUESTION_COLUMN_NAME],
-            # 길이가 긴 context가 등장할 경우 truncation을 진행
+            
             truncation="only_second" if pad_on_right else "only_first",
             max_length=max_seq_length,
             stride=data_args.doc_stride,
-            # overflow 발생 시 원래 인덱스를 찾을 수 있게 mapping 가능한 값이 필요
+            
             return_overflowing_tokens=True,
-            # token의 캐릭터 단위 position을 찾을 수 있는 offset을 반환
-            # start position과 end position을 찾는데 도움을 줌
+            
             return_offsets_mapping=True,
-            # sentence pair가 입력으로 들어올 때 0과 1로 구분지음
+            
             return_token_type_ids=data_args.return_token_type_ids,
             padding="max_length" if data_args.pad_to_max_length else False,
-            # return_tensors='pt'
+            
         )
         return tokenized_examples
     
@@ -197,8 +189,7 @@ def get_intensive_features(tokenizer, mode, data_args):
                 start_char = answers["answer_start"][0]
                 end_char = start_char + len(answers["text"][0])
                 
-                # sequence_ids는 0, 1, None의 세 값만 가짐
-                # None 0 0 ... 0 None 1 1 ... 1 None
+                
                 
                 # Start token index of the current span in the text.
                 token_start_index = 0
@@ -266,7 +257,7 @@ def get_intensive_features(tokenizer, mode, data_args):
             # `p_mask` which indicates the tokens that can't be in answers
             # Build the p_mask: non special tokens and context gets 0.0, the others get 1.0.
             # The cls token gets 0.0 too (for predictions of empty answers).
-            # iInspired by XLNet.
+            
             if beam_based:
                 tokenized_examples["cls_index"].append(cls_index)
                 tokenized_examples["p_mask"].append(
