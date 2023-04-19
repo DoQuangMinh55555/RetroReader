@@ -21,7 +21,7 @@ def from_library():
 
 C, RetroReader = from_library()
 
-# https://stackoverflow.com/questions/70274841/streamlit-unhashable-typeerror-when-i-use-st-cache
+
 my_hash_func = {
     io.TextIOWrapper: lambda _: None,
     pyarrow.lib.Buffer: lambda _: 0,
