@@ -6,6 +6,7 @@ import os
 import yaml
 import pyarrow
 import tokenizers
+import collections
 
 
 os.environ["TOKENIZERS_PARALLELISM"] = "true"
@@ -109,7 +110,17 @@ def main():
                     context = format_context(context, answer_start, answer_end)
             else:
                 st.markdown("## 5 highest possible answers are")
-                st.json(nbest_preds)
+                best_preds = collections.OrderedDict()
+                best_preds["id-01"] = []
+                for i in range(5):
+                    best_preds["id-01"].append(
+                        {
+                            "text": nbest_preds["id-01"][i]["text"],
+                            "probability": nbest_preds["id-01"][i]["probability"],
+                        }
+                    )
+                #st.json(nbest_preds)
+                st.json(best_preds)
              
         
     else:
