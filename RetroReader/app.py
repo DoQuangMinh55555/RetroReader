@@ -174,7 +174,7 @@ def main():
                 else:
                     best_preds = collections.OrderedDict()
                     best_preds["id-01"] = []
-                    for i in range(5):
+                    for i in range(len(nbest_preds["id-01"])):
                         best_preds["id-01"].append(
                             {
                                 "câu trả lời": nbest_preds["id-01"][i]["text"],
