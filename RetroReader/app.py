@@ -50,13 +50,13 @@ def main():
     option = st.selectbox(
         label="Please choose the language you want to use/Vui lòng chọn ngôn ngữ mà bạn mong muốn sử dụng",
         options=(
-            "English",
-            "Vietnamese"
+            "English/Tiếng Anh",
+            "Vietnamese/Tiếng Việt"
         ),
         index=0,
     )
     
-    if option == "English":
+    if option == "English/Tiếng Anh":
         st.title("Retrospective Reader Demo")
         retro_reader = load_en_bert_large_model()
         lang_prefix = "EN"
