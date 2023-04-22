@@ -34,6 +34,10 @@ def load_en_bert_large_model():
     config_file = "configs/inference_en_bert_large.yaml"
     return RetroReader.load(config_file=config_file)
 
+# def load_vi_bert_large_model():
+#     config_file = "configs/inference_vi_bert_large.yaml"
+#     return RetroReader.load(config_file=config_file)
+
 def format_context(context: str, answer_start: int, answer_end: int):
     context_before_answer = context[:answer_start]
     context_answer = context[answer_start:answer_end]
@@ -44,7 +48,7 @@ def format_context(context: str, answer_start: int, answer_end: int):
 
 def main():
     option = st.selectbox(
-        label="Please choose the language you want to use",
+        label="Please choose the language you want to use/Vui lòng chọn ngôn ngữ mà bạn mong muốn sử dụng",
         options=(
             "English",
             "Vietnamese"
@@ -63,18 +67,18 @@ def main():
         st.markdown("## Demonstration")
         with st.form(key="my_form"):
             query = st.text_input(
-                label="Type your query",
+                label="Please input your query",
                 max_chars=None,
                 help=getattr(C, f"{lang_prefix}_QUERY_HELP_TEXT"),
             )
             context = st.text_area(
-                label="Type your context",
+                label="Please input your context",
                 height=height,
                 max_chars=None,
                 help=getattr(C, f"{lang_prefix}_CONTEXT_HELP_TEXT"),
             )
-            submit_button = st.form_submit_button(label="Submit")
-            return_submodule_outputs = st.checkbox('return_5_outputs', value=False)
+            submit_button = st.form_submit_button(label="Answer!")
+            return_submodule_outputs = st.checkbox('Return 5 highest possible outputs', value=False)
         
         if submit_button:
             with st.spinner("Please wait a little bit.."):
@@ -110,6 +114,56 @@ def main():
         
     else:
         st.title("Demo Bộ đọc Hồi tưởng")
+        #retro_reader = load_vi_bert_large_model()
+        lang_prefix = "EN"
+        height = 300
+        
+        st.markdown("## Hiện thực hệ thống")
+        with st.form(key="my_form"):
+            query = st.text_input(
+                label="Vui lòng nhập câu truy vấn của bạn",
+                max_chars=None,
+                help=getattr(C, f"{lang_prefix}_QUERY_HELP_TEXT"),
+            )
+            context = st.text_area(
+                label="Vui lòng cung cấp ngữ cảnh",
+                height=height,
+                max_chars=None,
+                help=getattr(C, f"{lang_prefix}_CONTEXT_HELP_TEXT"),
+            )
+            submit_button = st.form_submit_button(label="Trả lời câu hỏi!")
+            return_submodule_outputs = st.checkbox('Trả về 5 câu trả lời khả thi nhất', value=False)
+        if submit_button:
+            with st.spinner("Vui lòng chờ trong giây lát.."):
+                outputs = retro_reader(
+                    query=query,
+                    context=context,
+                    return_submodule_outputs=return_submodule_outputs,
+                )
+            answer = outputs[0]["id-01"]
+            nbest_preds = outputs[1]
+            highest_prob = outputs[2]
+            answer_start = outputs[3]
+            if not answer:
+                answer = "Không tìm được câu trả lời"
+                answer_start = -1
+            if not return_submodule_outputs:
+                st.markdown("## Câu trả lời có khả năng cao nhất là")
+                st.write(answer)
+                #ans_tuple = (answer, "", "#faa")
+                #annotated_text(ans_tuple)
+                st.markdown("## Xác suất cho câu trả lời này là")
+                st.write(highest_prob)
+                #st.markdown("## Answer start is")
+                #st.write(answer_start)
+                if answer_start != -1:
+                    answer_end = answer_start + len(answer)
+                    #st.write(format_context(context, answer_start, answer_end))
+                    context = format_context(context, answer_start, answer_end)
+            else:
+                st.markdown("## 5 câu trả lời khả thi nhất là")
+                st.json(nbest_preds)
+        
     
     
     
