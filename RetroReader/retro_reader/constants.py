@@ -84,7 +84,6 @@ DEFAULT_CONFIG_FILE = os.path.join(
 EN_QUERY_HELP_TEXT = "Please enter your question!"
 EN_CONTEXT_HELP_TEXT = "Please enter your context!"
 
+VI_QUERY_HELP_TEXT = "Hãy nhập câu truy vấn!"
+VI_CONTEXT_HELP_TEXT = "Hãy nhập ngữ cảnh!"
 
-EN_EXAMPLE_QUERY = ""
-EN_EXAMPLE_CONTEXTS = """
-""".strip()
