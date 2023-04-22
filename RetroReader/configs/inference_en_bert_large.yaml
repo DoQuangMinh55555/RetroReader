@@ -23,16 +23,10 @@ RetroDataModelArguments:
     use_auth_token: False
     
     # SketchModelArguments
-    #sketch_revision: en-bert-large-sketch
-    #sketch_model_name: D:/RetroReader/configs/sketch       ##### NEED TO TRAIN SKETCHY MODULE ON GG COLAB THEN DOWNLOAD THE MODEL, PASTE IT HERE
-    #sketch_tokenizer_name: D:/RetroReader/configs/sketch
     sketch_model_name: quangminhdo/retro-reader-for-LV-sketch
     sketch_architectures: BertForSequenceClassification
     
     # IntensiveModelArguments
-    #intensive_revision: en-bert-large-intensive
-    #intensive_model_name: D:/RetroReader/configs/intensive             ## WERE RUNNING, DIDN'T KNOW THE RESULTS
-    #intensive_tokenizer_name: D:/RetroReader/configs/intensive
     intensive_model_name: quangminhdo/retro-reader-for-LV-intensive
     intensive_architectures: BertForQuestionAnsweringAVPool
     
