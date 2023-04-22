@@ -110,7 +110,7 @@ def main():
                 else:
                     best_preds = collections.OrderedDict()
                     best_preds["id-01"] = []
-                    for i in range(5):
+                    for i in range(len(nbest_preds["id-01"])):
                         best_preds["id-01"].append(
                             {
                                 "answer": nbest_preds["id-01"][i]["text"],
@@ -165,7 +165,6 @@ def main():
                 
                 if answer_start != -1:
                     answer_end = answer_start + len(answer)
-                    #st.write(format_context(context, answer_start, answer_end))
                     context = format_context(context, answer_start, answer_end)
             else:
                 st.markdown("## 5 câu trả lời khả thi nhất là")
