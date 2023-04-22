@@ -93,34 +93,32 @@ def main():
             highest_prob = outputs[2]
             answer_start = outputs[3]
             if not answer:
-                answer = "No answer"
+                answer = "No answer for this question"
                 answer_start = -1
             if not return_submodule_outputs:
                 st.markdown("## Highest possible answer is")
                 st.write(answer)
-                #ans_tuple = (answer, "", "#faa")
-                #annotated_text(ans_tuple)
                 st.markdown("## Probability for this answer is")
                 st.write(highest_prob)
-                #st.markdown("## Answer start is")
-                #st.write(answer_start)
                 if answer_start != -1:
                     answer_end = answer_start + len(answer)
-                    #st.write(format_context(context, answer_start, answer_end))
                     context = format_context(context, answer_start, answer_end)
             else:
                 st.markdown("## 5 highest possible answers are")
-                best_preds = collections.OrderedDict()
-                best_preds["id-01"] = []
-                for i in range(5):
-                    best_preds["id-01"].append(
-                        {
-                            "answer": nbest_preds["id-01"][i]["text"],
-                            "probability": nbest_preds["id-01"][i]["probability"],
-                        }
-                    )
-                #st.json(nbest_preds)
-                st.json(best_preds)
+                if answer_start == -1:
+                    st.write("No answer for this question")
+                else:
+                    best_preds = collections.OrderedDict()
+                    best_preds["id-01"] = []
+                    for i in range(5):
+                        best_preds["id-01"].append(
+                            {
+                                "answer": nbest_preds["id-01"][i]["text"],
+                                "probability": nbest_preds["id-01"][i]["probability"],
+                            }
+                        )
+                
+                    st.json(best_preds)
              
         
     else:
@@ -144,44 +142,47 @@ def main():
             )
             submit_button = st.form_submit_button(label="Trả lời câu hỏi!")
             return_submodule_outputs = st.checkbox('Trả về 5 câu trả lời khả thi nhất', value=False)
-#         if submit_button:
-#             with st.spinner("Vui lòng chờ trong giây lát.."):
-#                 outputs = retro_reader(
-#                     query=query,
-#                     context=context,
-#                     return_submodule_outputs=return_submodule_outputs,
-#                 )
-#             answer = outputs[0]["id-01"]
-#             nbest_preds = outputs[1]
-#             highest_prob = outputs[2]
-#             answer_start = outputs[3]
-#             if not answer:
-#                 answer = "Không tìm được câu trả lời"
-#                 answer_start = -1
-#             if not return_submodule_outputs:
-#                 st.markdown("## Câu trả lời khả thi nhất là")
-#                 st.write(answer)
+        if submit_button:
+            with st.spinner("Vui lòng chờ trong giây lát.."):
+                outputs = retro_reader(
+                    query=query,
+                    context=context,
+                    return_submodule_outputs=return_submodule_outputs,
+                )
+            answer = outputs[0]["id-01"]
+            nbest_preds = outputs[1]
+            highest_prob = outputs[2]
+            answer_start = outputs[3]
+            if not answer:
+                answer = "Không tìm được câu trả lời cho câu hỏi này"
+                answer_start = -1
+            if not return_submodule_outputs:
+                st.markdown("## Câu trả lời khả thi nhất là")
+                st.write(answer)
 
-#                 st.markdown("## Xác suất cho câu trả lời này là")
-#                 st.write(highest_prob)
+                st.markdown("## Xác suất cho câu trả lời này là")
+                st.write(highest_prob)
                 
-#                 if answer_start != -1:
-#                     answer_end = answer_start + len(answer)
-#                     #st.write(format_context(context, answer_start, answer_end))
-#                     context = format_context(context, answer_start, answer_end)
-#             else:
-#                 st.markdown("## 5 câu trả lời khả thi nhất là")
-#                 best_preds = collections.OrderedDict()
-#                 best_preds["id-01"] = []
-#                 for i in range(5):
-#                     best_preds["id-01"].append(
-#                         {
-#                             "câu trả lời": nbest_preds["id-01"][i]["text"],
-#                             "xác suất": nbest_preds["id-01"][i]["probability"],
-#                         }
-#                     )
-#                 #st.json(nbest_preds)
-#                 st.json(best_preds)
+                if answer_start != -1:
+                    answer_end = answer_start + len(answer)
+                    #st.write(format_context(context, answer_start, answer_end))
+                    context = format_context(context, answer_start, answer_end)
+            else:
+                st.markdown("## 5 câu trả lời khả thi nhất là")
+                if answer_start == -1:
+                    st.write("Không tìm được câu trả lời cho câu hỏi này")
+                else:
+                    best_preds = collections.OrderedDict()
+                    best_preds["id-01"] = []
+                    for i in range(5):
+                        best_preds["id-01"].append(
+                            {
+                                "câu trả lời": nbest_preds["id-01"][i]["text"],
+                                "xác suất": nbest_preds["id-01"][i]["probability"],
+                            }
+                        )
+                
+                    st.json(best_preds)
         
     
     
