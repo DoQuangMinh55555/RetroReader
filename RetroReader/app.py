@@ -79,7 +79,7 @@ def main():
                 help=getattr(C, f"{lang_prefix}_CONTEXT_HELP_TEXT"),
             )
             submit_button = st.form_submit_button(label="Answer!")
-            return_submodule_outputs = st.checkbox('Return 5 highest possible outputs', value=False)
+            return_submodule_outputs = st.checkbox('Return 5 highest possible answers', value=False)
         
         if submit_button:
             with st.spinner("Please wait a little bit.."):
@@ -115,7 +115,7 @@ def main():
                 for i in range(5):
                     best_preds["id-01"].append(
                         {
-                            "text": nbest_preds["id-01"][i]["text"],
+                            "answer": nbest_preds["id-01"][i]["text"],
                             "probability": nbest_preds["id-01"][i]["probability"],
                         }
                     )
@@ -126,7 +126,7 @@ def main():
     else:
         st.title("Demo Bộ đọc Hồi tưởng")
         #retro_reader = load_vi_bert_large_model()
-        lang_prefix = "EN"
+        lang_prefix = "VI"
         height = 300
         
         st.markdown("## Hiện thực hệ thống")
@@ -159,21 +159,29 @@ def main():
 #                 answer = "Không tìm được câu trả lời"
 #                 answer_start = -1
 #             if not return_submodule_outputs:
-#                 st.markdown("## Câu trả lời có khả năng cao nhất là")
+#                 st.markdown("## Câu trả lời khả thi nhất là")
 #                 st.write(answer)
-#                 #ans_tuple = (answer, "", "#faa")
-#                 #annotated_text(ans_tuple)
+
 #                 st.markdown("## Xác suất cho câu trả lời này là")
 #                 st.write(highest_prob)
-#                 #st.markdown("## Answer start is")
-#                 #st.write(answer_start)
+                
 #                 if answer_start != -1:
 #                     answer_end = answer_start + len(answer)
 #                     #st.write(format_context(context, answer_start, answer_end))
 #                     context = format_context(context, answer_start, answer_end)
 #             else:
 #                 st.markdown("## 5 câu trả lời khả thi nhất là")
-#                 st.json(nbest_preds)
+#                 best_preds = collections.OrderedDict()
+#                 best_preds["id-01"] = []
+#                 for i in range(5):
+#                     best_preds["id-01"].append(
+#                         {
+#                             "câu trả lời": nbest_preds["id-01"][i]["text"],
+#                             "xác suất": nbest_preds["id-01"][i]["probability"],
+#                         }
+#                     )
+#                 #st.json(nbest_preds)
+#                 st.json(best_preds)
         
     
     
