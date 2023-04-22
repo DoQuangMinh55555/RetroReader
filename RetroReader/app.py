@@ -133,36 +133,36 @@ def main():
             )
             submit_button = st.form_submit_button(label="Trả lời câu hỏi!")
             return_submodule_outputs = st.checkbox('Trả về 5 câu trả lời khả thi nhất', value=False)
-        if submit_button:
-            with st.spinner("Vui lòng chờ trong giây lát.."):
-                outputs = retro_reader(
-                    query=query,
-                    context=context,
-                    return_submodule_outputs=return_submodule_outputs,
-                )
-            answer = outputs[0]["id-01"]
-            nbest_preds = outputs[1]
-            highest_prob = outputs[2]
-            answer_start = outputs[3]
-            if not answer:
-                answer = "Không tìm được câu trả lời"
-                answer_start = -1
-            if not return_submodule_outputs:
-                st.markdown("## Câu trả lời có khả năng cao nhất là")
-                st.write(answer)
-                #ans_tuple = (answer, "", "#faa")
-                #annotated_text(ans_tuple)
-                st.markdown("## Xác suất cho câu trả lời này là")
-                st.write(highest_prob)
-                #st.markdown("## Answer start is")
-                #st.write(answer_start)
-                if answer_start != -1:
-                    answer_end = answer_start + len(answer)
-                    #st.write(format_context(context, answer_start, answer_end))
-                    context = format_context(context, answer_start, answer_end)
-            else:
-                st.markdown("## 5 câu trả lời khả thi nhất là")
-                st.json(nbest_preds)
+#         if submit_button:
+#             with st.spinner("Vui lòng chờ trong giây lát.."):
+#                 outputs = retro_reader(
+#                     query=query,
+#                     context=context,
+#                     return_submodule_outputs=return_submodule_outputs,
+#                 )
+#             answer = outputs[0]["id-01"]
+#             nbest_preds = outputs[1]
+#             highest_prob = outputs[2]
+#             answer_start = outputs[3]
+#             if not answer:
+#                 answer = "Không tìm được câu trả lời"
+#                 answer_start = -1
+#             if not return_submodule_outputs:
+#                 st.markdown("## Câu trả lời có khả năng cao nhất là")
+#                 st.write(answer)
+#                 #ans_tuple = (answer, "", "#faa")
+#                 #annotated_text(ans_tuple)
+#                 st.markdown("## Xác suất cho câu trả lời này là")
+#                 st.write(highest_prob)
+#                 #st.markdown("## Answer start is")
+#                 #st.write(answer_start)
+#                 if answer_start != -1:
+#                     answer_end = answer_start + len(answer)
+#                     #st.write(format_context(context, answer_start, answer_end))
+#                     context = format_context(context, answer_start, answer_end)
+#             else:
+#                 st.markdown("## 5 câu trả lời khả thi nhất là")
+#                 st.json(nbest_preds)
         
     
     
