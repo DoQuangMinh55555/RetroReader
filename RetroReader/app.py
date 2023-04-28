@@ -35,8 +35,8 @@ def load_en_bert_large_model():
     config_file = "configs/inference_en_bert_large.yaml"
     return RetroReader.load(config_file=config_file)
 
-def load_vi_bert_large_model():
-    config_file = "configs/inference_vi_bert_large.yaml"
+def load_vi_phobert_large_model():
+    config_file = "configs/inference_vi_phobert_large.yaml"
     return RetroReader.load(config_file=config_file)
 
 def format_context(context: str, answer_start: int, answer_end: int):
@@ -123,7 +123,7 @@ def main():
         
     else:
         st.title("Demo Bộ đọc Hồi tưởng")
-        retro_reader = load_vi_bert_large_model()
+        retro_reader = load_vi_phobert_large_model()
         lang_prefix = "VI"
         height = 300
         
