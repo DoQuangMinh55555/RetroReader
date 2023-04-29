@@ -1,7 +1,7 @@
 RetroDataModelArguments:
 
     # DataArguments
-    max_seq_length: 512
+    max_seq_length: 256
     max_answer_length: 30
     doc_stride: 128
     return_token_type_ids: True
@@ -24,11 +24,11 @@ RetroDataModelArguments:
     
     # SketchModelArguments
     sketch_model_name: quangminhdo/retro-reader-for-LV-sketch-Vietnamese
-    sketch_architectures: BertForSequenceClassification
+    sketch_architectures: RobertaForSequenceClassification
     
     # IntensiveModelArguments
     intensive_model_name: quangminhdo/retro-reader-for-LV-intensive-Vietnamese
-    intensive_architectures: BertForQuestionAnsweringAVPool
+    intensive_architectures: RobertaForQuestionAnsweringAVPool
     
 
 TrainingArguments:
