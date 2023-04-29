@@ -23,11 +23,11 @@ RetroDataModelArguments:
     use_auth_token: False
     
     # SketchModelArguments
-    sketch_model_name: vinai/phobert-large
+    sketch_model_name: quangminhdo/retro-reader-for-LV-sketch-Vietnamese
     sketch_architectures: RobertaForSequenceClassification
     
     # IntensiveModelArguments
-    intensive_model_name: vinai/phobert-large
+    intensive_model_name: quangminhdo/retro-reader-for-LV-sketch-Vietnamese
     intensive_architectures: RobertaForQuestionAnsweringAVPool
     
 
