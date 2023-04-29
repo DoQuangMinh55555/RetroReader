@@ -1,7 +1,7 @@
 RetroDataModelArguments:
 
     # DataArguments
-    max_seq_length: 512
+    max_seq_length: 256
     max_answer_length: 30
     doc_stride: 128
     return_token_type_ids: True
