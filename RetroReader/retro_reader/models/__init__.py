@@ -12,8 +12,7 @@ from .modeling_electra import (
 from .modeling_roberta import (
     RobertaConfig,
     RobertaForSequenceClassification,
-    #RobertaForQuestionAnsweringAVPool
-    PhobertForQuestionAnsweringAVPool
+    RobertaForQuestionAnsweringAVPool
 )
 from .modeling_bert import (
     BertConfig,
