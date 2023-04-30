@@ -28,7 +28,7 @@ RetroDataModelArguments:
     
     # IntensiveModelArguments
     intensive_model_name: quangminhdo/retro-reader-for-LV-intensive-Vietnamese
-    intensive_architectures: RobertaForQuestionAnsweringAVPool
+    intensive_architectures: PhobertForQuestionAnsweringAVPool
     
 
 TrainingArguments:
