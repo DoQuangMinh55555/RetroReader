@@ -19,3 +19,8 @@ from .modeling_bert import (
     BertForSequenceClassification,
     BertForQuestionAnsweringAVPool
 )
+from .modeling_phobert import (
+    RobertaConfig,
+    RobertaForSequenceClassification,
+    PhobertForQuestionAnsweringAVPool
+)
