@@ -24,12 +24,11 @@ RetroDataModelArguments:
     
     # SketchModelArguments
     sketch_model_name: quangminhdo/retro-reader-for-LV-sketch-Vietnamese
-    sketch_architectures: RobertaForSequenceClassification
+    sketch_architectures: BertForSequenceClassification
     
     # IntensiveModelArguments
     intensive_model_name: quangminhdo/retro-reader-for-LV-intensive-Vietnamese
-    #intensive_architectures: RobertaForQuestionAnsweringAVPool
-    intensive_architectures: PhobertForQuestionAnsweringAVPool
+    intensive_architectures: BertForQuestionAnsweringAVPool
     
 
 TrainingArguments:
