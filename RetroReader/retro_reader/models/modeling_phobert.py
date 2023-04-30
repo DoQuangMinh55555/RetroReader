@@ -19,6 +19,8 @@ class RobertaForSequenceClassification(SeqClassification):
     model_type = "roberta"
 
 class PhobertForQuestionAnsweringAVPool(nn.Module):
+    model_type = "roberta"
+    
     def __init__(self, model_path, config):
         super(PhobertForQuestionAnsweringAVPool, self).__init__()
         self.num_labels = config.num_labels
