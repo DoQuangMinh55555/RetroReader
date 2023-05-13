@@ -58,7 +58,7 @@ def main():
     )
     
     if option == "English/Tiếng Anh":
-        st.title("Retrospective Reader Demo")
+        #st.title("Retrospective Reader Demo")
         retro_reader = load_en_bert_large_model()
         lang_prefix = "EN"
         height = 300
@@ -122,7 +122,7 @@ def main():
              
         
     else:
-        st.title("Demo Bộ đọc Hồi tưởng")
+        #st.title("Demo Bộ đọc Hồi tưởng")
         retro_reader = load_vi_phobert_large_model()
         lang_prefix = "VI"
         height = 300
