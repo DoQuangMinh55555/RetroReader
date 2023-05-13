@@ -65,7 +65,7 @@ def main():
         
         
         
-        st.markdown("## Demonstration")
+        st.markdown("## Demo QA system")
         with st.form(key="my_form"):
             query = st.text_input(
                 label="Please input your query",
@@ -127,7 +127,7 @@ def main():
         lang_prefix = "VI"
         height = 300
         
-        st.markdown("## Hiện thực hệ thống")
+        st.markdown("## Demo Hệ thống Hỏi-Đáp")
         with st.form(key="my_form"):
             query = st.text_input(
                 label="Vui lòng nhập câu truy vấn của bạn",
